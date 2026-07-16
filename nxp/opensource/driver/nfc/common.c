@@ -462,7 +462,7 @@ long nfc_dev_compat_ioctl(struct file *pfile, unsigned int cmd,
 int nfc_post_init(struct nfc_dev *nfc_dev)
 {
 	int ret=0;
-#ifndef NFC_CLK_REQ_GPIO_WAKEUP
+#ifdef NFC_CLK_REQ_GPIO_WAKEUP
 	unsigned int clkreq_gpio = 0;
 #endif
 	static int post_init_success;
@@ -490,7 +490,7 @@ int nfc_post_init(struct nfc_dev *nfc_dev)
 			__func__, nfc_gpio->dwl_req);
 	}
 
-#ifndef NFC_CLK_REQ_GPIO_WAKEUP
+#ifdef NFC_CLK_REQ_GPIO_WAKEUP
         /* Read clkreq GPIO number from device tree*/
         ret = of_property_read_u32_index(nfc_dev->i2c_dev.client->dev.of_node, DTS_CLKREQ_GPIO_STR, 1, &clkreq_gpio);
         if (ret < 0) {

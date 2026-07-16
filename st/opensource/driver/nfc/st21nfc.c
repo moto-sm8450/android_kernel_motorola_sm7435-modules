@@ -1333,7 +1333,7 @@ static int st21nfc_probe(struct i2c_client *client,
 	int ret;
 	struct st21nfc_device *st21nfc_dev;
 	struct device *dev = &client->dev;
-#ifndef NFC_CLK_REQ_GPIO_WAKEUP
+#ifdef NFC_CLK_REQ_GPIO_WAKEUP
 	unsigned int clkreq_gpio = 0;
 #endif
 	pr_info("%s: enter\n",__func__);
@@ -1446,7 +1446,7 @@ static int st21nfc_probe(struct i2c_client *client,
 	if (IS_ERR_OR_NULL(st21nfc_dev->gpiod_clkreq)) {
 		st21nfc_dev->clk_run = false;
 	} else {
-#ifndef NFC_CLK_REQ_GPIO_WAKEUP
+#ifdef NFC_CLK_REQ_GPIO_WAKEUP
 		/* Read clkreq GPIO number from device tree*/
 		ret = of_property_read_u32_index(client->dev.of_node, "clkreq-gpios", 1, &clkreq_gpio);
 		if (ret < 0) {
